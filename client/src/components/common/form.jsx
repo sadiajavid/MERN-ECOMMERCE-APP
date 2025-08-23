@@ -1,88 +1,84 @@
 import React from 'react'
-import { Input } from "../ui/input";
+import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea';
+import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 
-const CommonForm = ({formControl,formData,setFormData,onSubmit,buttonText}) => {
-  let element=null;
-  
-  
-  
-  function renderComponentByInputType(getControlItem){
-    const value= formData[ getControlItem.name ] || '';
+const CommonForm = ({formControl,formData,setFormData,onSubmit,isBtnDisabled,buttonText}) => {
+  const renderComponenetByType=(getControlItem)=>{
+
+    const value=formData[getControlItem.name] || '';
     switch(getControlItem.componentType){
-      case'input':
-      element=(
-        <Input  
-         name={getControlItem.name}
-         label={getControlItem.label}
-         id={getControlItem.name}
-         value={value}
-          onChange={(e)=>{
+     case 'input':
+      return(
+        <Input
+        name={getControlItem.name}
+        placeholder={getControlItem.placeholder}
+        type={getControlItem.text}
+        id={getControlItem.name}
+        value={value}
+        onChange={(event)=>{
           setFormData({
             ...formData,
-            [getControlItem.name]:e.target.value,
+            [getControlItem.name]:event.target.value
+
           })
-         }}
-         /> 
-      )
+        }
+        }
+        />
+      );
       break;
-      case'textarea':
-      element=(
-        <Textarea  
-         name={getControlItem.name}
-         label={getControlItem.label}
-         id={getControlItem.name}
-         value={value}
-         onChange={(e)=>{
+      case 'textarea':
+        return(
+          <Textarea 
+            name={getControlItem.name}
+            placeholder={getControlItem.placeholder}
+            type={getControlItem.text}
+            id={getControlItem.name}
+            value={value}
+              onChange={(event)=>{
           setFormData({
             ...formData,
-            [getControlItem.name]:e.target.value,
+            [getControlItem.name]:event.target.value
+
           })
-         }}
-
-         /> 
-      )
-      break;
-
-      default:
-         element=(
-        <Input  
-         name={getControlItem.name}
-         label={getControlItem.label}
-         id={getControlItem.name}
-         value={value}
-         onChange={(e)=>{
+        }}
+            />
+        )
+   break;
+   default:
+      return(
+        <Input
+        name={getControlItem.name}
+        placeholder={getControlItem.placeholder}
+        type={getControlItem.text}
+        id={getControlItem.name}
+        value={value}
+          onChange={(event)=>{
           setFormData({
             ...formData,
-            [getControlItem.name]:e.target.value,
+            [getControlItem.name]:event.target.value
+
           })
-         }}
-         /> 
-      )
-        break;
-    }
-
-
+        }}
+        />
+      );
+    
+     }
   }
   return (
-      <form onSubmit={onSubmit}>
+       <form onSubmit={onSubmit}>
         <div className='flex flex-col gap-3'>
-          {
-           formControl.map((controlItem)=>{
-            return(
-            <div className="grid w-full gap-1.5" key={controlItem.name}>
-              <label>{controlItem.label} </label>
-              {renderComponentByInputType(controlItem)}
-            </div>
-            )
-
-           })
-          }
-
+          {formControl.map((controlItem)=>(
+            <div className='grid w-full gap-1.5' key={controlItem.name}>
+              <Label>{controlItem.label} </Label>
+              {renderComponenetByType(controlItem)}
+              </div>
+          ))}
+      <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
+        {buttonText || "Submit"}
+      </Button>
         </div>
-        <Button type="submit" className="mt-2 w-full">{buttonText || 'Submit'}</Button>
-
       </form>
   )
 }

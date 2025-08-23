@@ -9,26 +9,28 @@ const AuthRegister = () => {
     email:'',
     password:''
   })
+  const onSubmit=(e)=>{
+    e.PreventDdfault();
+    console.log(formData);
+  }
+ 
   return (
     <div className='mx-auto w-full max-w-md space-y-6'>
       <div className='text-center'>
         <h1 className='text-3xl font-bold tracking-toght text-foreground'>Create New Account</h1>
-        <p>Already Have an Account 
+        <p>Already Have an Account  
         <Link className='font-medium text-primary hover:underline' to="/auth/login" >
           Login
-        </Link>
+        </Link> 
         </p>
       </div>
          <CommonForm 
          formControl={registerFormControl}
          buttonText={"Sign Up"}
          formData={formData}
-         setFormData={setFormData}
-
-         
+         setFormData={setFormData} 
+        onSubmit={onSubmit}
          />
-      
-
     </div>
  
   )
