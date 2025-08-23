@@ -10,7 +10,7 @@ const AuthRegister = () => {
     password:''
   })
   const onSubmit=(e)=>{
-    e.PreventDdfault();
+    e.preventDefault();
     console.log(formData);
   }
  

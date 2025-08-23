@@ -22,4 +22,4 @@ role:{
 });
 
 const User=mongooose.model('User',UserSchema)
-module.exports=User;
+export default User;
