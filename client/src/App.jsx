@@ -14,14 +14,17 @@ import ShoppingCheckout from './pages/shopping-view/checkout'
 import ShoppingHome from './pages/shopping-view/home'
 import ShoppingListing from './pages/shopping-view/listing'
 import CheckAuth from './components/common/check-auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { checkAuth } from './store/auth-slice'
+import { useEffect } from 'react'
 
 function App() {
-   const  isAuthenticated=false;
-   const user=null;
-    // const  user={
-    //   name:'sadia',
-    //   role:'user'
-    // };
+   const{isAuthenticated,user}=useSelector(state=>state.auth);
+   const dispatch=useDispatch();
+   useEffect(()=>{
+      dispatch(checkAuth())
+   },[dispatch])
+    
   return (
     <>
     <Routes>

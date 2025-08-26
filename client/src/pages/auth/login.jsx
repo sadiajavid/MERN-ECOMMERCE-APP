@@ -1,15 +1,34 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { loginFormControl } from '@/config';
 import CommonForm from '@/components/common/form';
+import { loginUser } from '@/store/auth-slice';
+import { useDispatch } from 'react-redux';
+import { useToast } from '@/hooks/use-toast';
 
 const AuthLogin = () => {
   const [formData,setFormData]=useState({
      email:'',
      password:''
   })
+   const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const {toast}=useToast();
   const onSubmit=(e)=>{
-   e.PreventDefault();
+   e.preventDefault();
+    dispatch(loginUser(formData)).then((data)=>{
+   console.log(data);
+         if(data?.payload?.success){
+           toast({
+             title:data?.payload?.message
+           })
+         }else{
+           toast({
+             title:data?.payload?.message,
+             variant:'destructive',
+           })
+         }
+         });
    console.log(formData)
   }
  
