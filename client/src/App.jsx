@@ -19,17 +19,19 @@ import { checkAuth } from './store/auth-slice'
 import { useEffect } from 'react'
 
 function App() {
-   const{isAuthenticated,user}=useSelector(state=>state.auth);
+   const{isAuthenticated,user,isLoading}=useSelector(state=>state.auth);
+   
    const dispatch=useDispatch();
    useEffect(()=>{
       dispatch(checkAuth())
    },[dispatch])
+   console.log(user)
     
   return (
     <>
     <Routes>
       <Route path="/auth" element={
-        <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        <CheckAuth isAuthenticated={isAuthenticated} user={user}   isLoading={isLoading}>
            <AuthLayout/>
         </CheckAuth>
       }>
@@ -38,7 +40,7 @@ function App() {
       </Route>
 
     <Route path="/admin"  element={
-      <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+      <CheckAuth isAuthenticated={isAuthenticated} user={user}   isLoading={isLoading}>
          <AdminLayout/>
       </CheckAuth>
       }>
@@ -49,7 +51,7 @@ function App() {
     </Route>
 
     <Route path="/shop" element={
-      <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+      <CheckAuth isAuthenticated={isAuthenticated} user={user}   isLoading={isLoading}>
         <ShoppingLayout/>
       </CheckAuth>
       }>
